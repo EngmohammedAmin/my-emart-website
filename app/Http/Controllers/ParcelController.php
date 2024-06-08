@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\VendorUsers;
+// use Illuminate\Contracts\Session\Session as Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+
 use Razorpay\Api\Api;
-use Session;
+// use Session;
 
 class ParcelController extends Controller
 {

@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\VendorUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session as FacadesSession;
 use Razorpay\Api\Api;
 use Session;
 
@@ -43,7 +44,6 @@ class RentalController extends Controller
     public function rentalCars()
     {
         $rentalCarsData = Session::get('rentalCarsData', []);
-
         return view('rental.rental_cars', ['rentalCarsData' => $rentalCarsData]);
     }
 

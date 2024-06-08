@@ -32,7 +32,7 @@
                 <div class="media transactions-list-left">
                     <div class="mr-3 font-weight-bold card-icon"><span><i class="fa fa-credit-card"></i></span></div>
                     <div class="media-body">
-                        <h6 class="date">Mar 24, 2022</h6><p class="text-muted mb-0">Wallet Topup</p>
+                        <h6 class="date">Mar 24, 2022</h6><p class="text-muted mb-0">{{trans('lang.Wallet_Topup')}}</p>
                     </div>
                 </div>
 
@@ -61,10 +61,10 @@
                         <nav aria-label="Page navigation example">
                             <ul class="pagination justify-content-center">
                                 <li class="page-item ">
-                                    <a class="page-link" href="javascript:void(0);" id="users_table_previous_btn" onclick="prev()"  data-dt-idx="0" tabindex="0">Previous</a>
+                                    <a class="page-link" href="javascript:void(0);" id="users_table_previous_btn" onclick="prev()"  data-dt-idx="0" tabindex="0">{{trans('lang.Previous')}}</a>
                                 </li>
                                 <li class="page-item">
-                                    <a class="page-link" href="javascript:void(0);" id="users_table_next_btn" onclick="next()"  data-dt-idx="2" tabindex="0">Next</a>
+                                    <a class="page-link" href="javascript:void(0);" id="users_table_next_btn" onclick="next()"  data-dt-idx="2" tabindex="0">{{trans('lang.next')}}</a>
                                 </li>
                             </ul>
                         </nav>

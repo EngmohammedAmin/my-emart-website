@@ -272,7 +272,7 @@
                             </div>
 
                             <div class="tab-btn">
-                                <button type="button" class="btn btn-primary parcel_btn">Continue</button>
+                                <button type="button" class="btn btn-primary parcel_btn">{{trans('lang.continue')}}</button>
                             </div>
                         </div>
                     </div>

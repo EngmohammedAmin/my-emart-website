@@ -2,11 +2,11 @@
 
 @include('layouts.header')
 @php
-    $cityToCountry= file_get_contents(asset('tz-cities-to-countries.json'));
-    $cityToCountry=json_decode($cityToCountry,true);
-    $countriesJs=array();
-    foreach($cityToCountry as $key=>$value){
-    $countriesJs[$key]=$value;
+    $cityToCountry = file_get_contents(asset('tz-cities-to-countries.json'));
+    $cityToCountry = json_decode($cityToCountry, true);
+    $countriesJs = [];
+    foreach ($cityToCountry as $key => $value) {
+        $countriesJs[$key] = $value;
     }
 @endphp
 <?php
@@ -19,14 +19,14 @@ session_start();
             <div class="input-group rounded shadow-sm overflow-hidden col-md-9 col-sm-9">
                 <div class="input-group-prepend">
                     <button class="border-0 btn btn-outline-secondary text-dark bg-white btn-block"><i
-                                class="feather-search"></i></button>
+                            class="feather-search"></i></button>
                 </div>
                 <input type="text" class="shadow-none border-0 form-control" placeholder="Search for vendors or dishes">
             </div>
             <div class="text-white col-md-3 col-sm-3">
                 <div class="title d-flex align-items-center">
                     <a class="text-white font-weight-bold ml-auto" data-toggle="modal" data-target="#exampleModal"
-                       href="#">{{trans('lang.filter')}}</a>
+                        href="#">{{ trans('lang.filter') }}</a>
                 </div>
             </div>
 
@@ -42,39 +42,38 @@ session_start();
             <div class="container">
                 <div class="list-advance-search d-flex row pb-3">
                     <div class="col-md-3">
-                        <input type="hidden" id="carRate" value="0"/>
-                        <input type="hidden" id="driverRate" value="0"/>
-                        <input type="hidden" id="adminCommission" value=""/>
-                        <input type="hidden" id="adminCommissionType" value=""/>
+                        <input type="hidden" id="carRate" value="0" />
+                        <input type="hidden" id="driverRate" value="0" />
+                        <input type="hidden" id="adminCommission" value="" />
+                        <input type="hidden" id="adminCommissionType" value="" />
 
                         <input type="text" name="pick-up-date" placeholder="Pick-up date"
-                               class="form-control date_picker pick-up-date"
-                               value="<?php
-                               if (@$rentalCarsData && @$rentalCarsData['startDate']) {
-                                   echo $rentalCarsData['startDate'];
-                               }?>" id="pick-up-date">
+                            class="form-control date_picker pick-up-date" value="<?php
+                            if (@$rentalCarsData && @$rentalCarsData['startDate']) {
+                                echo $rentalCarsData['startDate'];
+                            } ?>" id="pick-up-date">
 
                     </div>
                     <div class="col-md-3">
                         <input type="text" name="drop-off-date" placeholder="Drop-off date"
-                               class="form-control date_picker drop-off-date"
-                               value="<?php
-                               if (@$rentalCarsData && @$rentalCarsData['endDate']) {
-                                   echo $rentalCarsData['endDate'];
-                               }?>" id="drop-off-date">
+                            class="form-control date_picker drop-off-date" value="<?php
+                            if (@$rentalCarsData && @$rentalCarsData['endDate']) {
+                                echo $rentalCarsData['endDate'];
+                            } ?>"
+                            id="drop-off-date">
                     </div>
                     <div class="col-md-3">
                         <input type="time" class="form-control startTime" value="<?php
                         if (@$rentalCarsData && @$rentalCarsData['startTime']) {
                             echo $rentalCarsData['startTime'];
-                        }?>">
+                        } ?>">
 
                     </div>
                     <div class="col-md-3">
                         <input type="time" class="form-control endTime" value="<?php
                         if (@$rentalCarsData && @$rentalCarsData['endTime']) {
                             echo $rentalCarsData['endTime'];
-                        }?>">
+                        } ?>">
 
 
                     </div>
@@ -82,30 +81,31 @@ session_start();
                 <div class="list-advance-search d-flex row pb-3">
                     <div class="col-md-3">
                         <input type="text" name="pickup-location" placeholder="Pickup location"
-                               class="form-control pickLocation" id="pickLocation"
-                               value="<?php
-                               if (@$rentalCarsData && @$rentalCarsData['pickLocation']) {
-                                   echo $rentalCarsData['pickLocation'];
-                               }?>" onchange="pickLocation()">
+                            class="form-control pickLocation" id="pickLocation" value="<?php
+                            if (@$rentalCarsData && @$rentalCarsData['pickLocation']) {
+                                echo $rentalCarsData['pickLocation'];
+                            } ?>"
+                            onchange="pickLocation()">
                     </div>
 
                     <?php
-                    $dropOffDiv = "";
-                    if (@$rentalCarsData && @$rentalCarsData['isDropSameLocation'] == "true") {
+                    $dropOffDiv = '';
+                    if (@$rentalCarsData && @$rentalCarsData['isDropSameLocation'] == 'true') {
                         $dropOffDiv = 'style="display:none"';
                     }
                     ?>
-                    <div class="col-md-3 dropOffDiv <?php echo $dropOffDiv;?>">
+                    <div class="col-md-3 dropOffDiv <?php echo $dropOffDiv; ?>">
                         <input type="text" name="pickup-location" placeholder=" location"
-                               class="form-control dropLocation" id="dropLocation"
-                               value="<?php
-                               if (@$rentalCarsData && @$rentalCarsData['dropLocation']) {
-                                   echo $rentalCarsData['dropLocation'];
-                               }?>" onchange="dropLocation()">
+                            class="form-control dropLocation" id="dropLocation" value="<?php
+                            if (@$rentalCarsData && @$rentalCarsData['dropLocation']) {
+                                echo $rentalCarsData['dropLocation'];
+                            } ?>"
+                            onchange="dropLocation()">
                     </div>
 
                     <div class="col-md-1 search-btn">
-                        <button type="button" class="btn btn-primary" id="find_car" onclick="findCar()">Search</button>
+                        <button type="button" class="btn btn-primary" id="find_car"
+                            onclick="findCar()">Search</button>
                     </div>
                 </div>
 
@@ -114,15 +114,15 @@ session_start();
                     <div class="rental-top-btn-inner d-flex row">
                         <div class="col-sm-6">
                             <div class="form-check">
-                                <span class="switch-label">{{trans('lang.book_with_driver')}}</span>
+                                <span class="switch-label">{{ trans('lang.book_with_driver') }}</span>
                                 <label class="switch">
 
                                     <?php
-                                    $isDriver = "";
-                                    if (@$rentalCarsData && @$rentalCarsData['isDriver'] == "true") {
-                                        $isDriver = "checked";
-                                    }?>
-                                    <input type="checkbox" class="isDriver" <?php echo $isDriver;?> onclick="findCar()">
+                                    $isDriver = '';
+                                    if (@$rentalCarsData && @$rentalCarsData['isDriver'] == 'true') {
+                                        $isDriver = 'checked';
+                                    } ?>
+                                    <input type="checkbox" class="isDriver" <?php echo $isDriver; ?> onclick="findCar()">
                                     <span class="slider round"></span>
                                 </label>
                             </div>
@@ -130,16 +130,16 @@ session_start();
 
                         <div class="col-sm-6 text-right">
                             <div class="form-check">
-                                <span class="switch-label">{{trans('lang.drop_off_same_location')}}</span>
+                                <span class="switch-label">{{ trans('lang.drop_off_same_location') }}</span>
                                 <label class="switch">
                                     <?php
-                                    $isDropSameLocation = "";
-                                    if (@$rentalCarsData && @$rentalCarsData['isDropSameLocation'] == "true") {
-                                        $isDropSameLocation = "checked";
-                                    }?>
+                                    $isDropSameLocation = '';
+                                    if (@$rentalCarsData && @$rentalCarsData['isDropSameLocation'] == 'true') {
+                                        $isDropSameLocation = 'checked';
+                                    } ?>
 
-                                    <input type="checkbox" class="isDropSameLocation"
-                                           <?php echo $isDropSameLocation;?> onclick="findCar()">
+                                    <input type="checkbox" class="isDropSameLocation" <?php echo $isDropSameLocation; ?>
+                                        onclick="findCar()">
                                     <span class="slider round"></span>
                                 </label>
                             </div>
@@ -155,7 +155,8 @@ session_start();
 
             <div class="container">
                 <div style="display: none;" class="coupon_code_copied_div mt-4 error_top text-center noData">
-                    <p>{{trans('lang.no_car_found')}}</p></div>
+                    <p>{{ trans('lang.no_car_found') }}</p>
+                </div>
                 <div class="row showCarDiv" style="display: none">
                     <div class="col-md-3 rental-list-left">
                         <div class="rental-left-box">
@@ -163,8 +164,7 @@ session_start();
                             <!-- Tabs nav -->
                             <div class="rental-nav-box">
                                 <div class="nav flex-column nav-pills nav-pills-custom car_type_div" id="v-pills-tab"
-                                     role="tablist"
-                                     aria-orientation="vertical">
+                                    role="tablist" aria-orientation="vertical">
 
                                 </div>
                             </div>
@@ -187,32 +187,37 @@ session_start();
 </div>
 
 <div id="data-table_processing_order" class="dataTables_processing panel panel-default" style="display: none;">
-    {{trans('lang.processing')}}
+    {{ trans('lang.processing') }}
 </div>
 
 @include('layouts.footer')
 <script src="https://unpkg.com/geofirestore/dist/geofirestore.js"></script>
 <script src="https://cdn.firebase.com/libs/geofire/5.0.1/geofire.min.js"></script>
-<script type="text/javascript" src="{{asset('vendor/slick/slick.min.js')}}"></script>
-<script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/1.0.10/datepicker.min.js"></script>
+<script type="text/javascript" src="{{ asset('vendor/slick/slick.min.js') }}"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/1.0.10/datepicker.min.js">
+</script>
 <link rel="stylesheet" type="text/css"
-      href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/1.0.10/datepicker.min.css"/>
+    href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/1.0.10/datepicker.min.css" />
 
 
 <script type="text/javascript">
-
     var database = firebase.firestore();
     var geoFirestore = new GeoFirestore(database);
 
     var html = '';
 
-    $(function () {
-        $('#pick-up-date').datepicker({format: 'DD/MM/YYYY', startDate: '-0m'});
-        $('#drop-off-date').datepicker({format: 'DD/MM/YYYY', startDate: '-0m'});
+    $(function() {
+        $('#pick-up-date').datepicker({
+            format: 'DD/MM/YYYY',
+            startDate: '-0m'
+        });
+        $('#drop-off-date').datepicker({
+            format: 'DD/MM/YYYY',
+            startDate: '-0m'
+        });
     });
 
-    var cityToCountry = '<?php echo json_encode($countriesJs);?>';
+    var cityToCountry = '<?php echo json_encode($countriesJs); ?>';
 
     cityToCountry = JSON.parse(cityToCountry);
     var userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -226,8 +231,9 @@ session_start();
     var section_id = getCookie('section_id');
     var taxSetting = [];
 
-    var reftaxSetting = database.collection('tax').where('country', '==', userCountry).where('enable', '==', true).where('sectionId', '==', section_id);
-    reftaxSetting.get().then(async function (snapshots) {
+    var reftaxSetting = database.collection('tax').where('country', '==', userCountry).where('enable', '==', true)
+        .where('sectionId', '==', section_id);
+    reftaxSetting.get().then(async function(snapshots) {
         if (snapshots.docs.length > 0) {
             snapshots.docs.forEach((val) => {
                 val = val.data();
@@ -248,7 +254,7 @@ session_start();
 
     var AdminCommission = database.collection('sections').doc(section_id);
 
-    AdminCommission.get().then(async function (AdminCommissionSnapshots) {
+    AdminCommission.get().then(async function(AdminCommissionSnapshots) {
 
         var section = AdminCommissionSnapshots.data();
         if (section.isEnableCommission) {
@@ -264,7 +270,7 @@ session_start();
     var currencyData = '';
     var decimal_degits = 0;
 
-    refCurrency.get().then(async function (snapshots) {
+    refCurrency.get().then(async function(snapshots) {
         currencyData = snapshots.docs[0].data();
         currentCurrency = currencyData.symbol;
         currencyAtRight = currencyData.symbolAtRight;
@@ -290,7 +296,7 @@ session_start();
 
     var placeholderImage = '';
 
-    placeholderImageRef.get().then(async function (placeholderImageSnapshots) {
+    placeholderImageRef.get().then(async function(placeholderImageSnapshots) {
 
         var placeHolderImageData = placeholderImageSnapshots.data();
 
@@ -298,10 +304,10 @@ session_start();
 
     });
 
-    $(document).ready(function () {
+    $(document).ready(function() {
 
 
-        var rentalCarsData = '<?php echo json_encode($rentalCarsData);?>';
+        var rentalCarsData = '<?php echo json_encode($rentalCarsData); ?>';
 
         getRentalCarDetails(rentalCarsData);
 
@@ -325,9 +331,11 @@ session_start();
         }
 
         var rentalServiceRef = "";
-        rentalServiceRef = geoFirestore.collection('users').where("role", "==", "driver").where('serviceType', '==', "rental-service").near({
-            center: new firebase.firestore.GeoPoint(parseFloat(rentalCarsData.address_lat), parseFloat(rentalCarsData.address_lng)),
-            radius: 50
+        rentalServiceRef = geoFirestore.collection('users').where("role", "==", "driver").where('serviceType', '==',
+            "rental-service").near({
+            center: new firebase.firestore.GeoPoint(parseFloat(rentalCarsData.address_lat), parseFloat(
+                rentalCarsData.address_lng)),
+            radius: 5000
         }).limit(200);
 
         address_lat = rentalCarsData.address_lat;
@@ -336,7 +344,7 @@ session_start();
         drop_address_lat = rentalCarsData.drop_address_lat;
         drop_address_lng = rentalCarsData.drop_address_lng;
 
-        rentalServiceRef.get().then(async function (snapShots) {
+        rentalServiceRef.get().then(async function(snapShots) {
 
             if (snapShots.docs.length > 0) {
 
@@ -347,15 +355,22 @@ session_start();
 
                     var data = listval.data();
 
-                    if (data.rentalBookingDate && data.rentalBookingDate.length > 0 && data.rentalBookingDate != null && data.rentalBookingDate != "") {
+                    if (data.rentalBookingDate && data.rentalBookingDate.length > 0 && data
+                        .rentalBookingDate != null && data.rentalBookingDate != "") {
 
                         for (var i = 0; i < data.rentalBookingDate.length; i++) {
-                            var rentalBookingDate = data.rentalBookingDate[i].toDate().toDateString();
+                            var rentalBookingDate = data.rentalBookingDate[i].toDate()
+                                .toDateString();
                             rentalBookingDate = new Date(rentalBookingDate);
 
-                            rentalBookingDate = rentalBookingDate.getDate() + '/' + (rentalBookingDate.getMonth() + 1) + '/' + rentalBookingDate.getFullYear();
+                            rentalBookingDate = rentalBookingDate.getDate() + '/' + (
+                                    rentalBookingDate.getMonth() + 1) + '/' + rentalBookingDate
+                                .getFullYear();
 
-                            if ((rentalBookingDate <= startDate && rentalBookingDate >= startDate) || (rentalBookingDate <= endDate && rentalBookingDate >= endDate)) {
+                            if ((rentalBookingDate <= startDate && rentalBookingDate >=
+                                    startDate) || (rentalBookingDate <= endDate &&
+                                    rentalBookingDate >=
+                                    endDate)) {
                                 checkFlag = false;
                             }
                         }
@@ -369,7 +384,8 @@ session_start();
 
                 if (snapShots.docs.length > count) {
 
-                    buildCarTypeHtml(snapShots, rentalCarsData.address_lat, rentalCarsData.address_lng, userIds);
+                    buildCarTypeHtml(snapShots, rentalCarsData.address_lat, rentalCarsData.address_lng,
+                        userIds);
                     $('.showCarDiv').show();
                     $('.noData').hide();
                 } else {
@@ -398,7 +414,7 @@ session_start();
 
     }
 
-    $(document).on('change', '.isDriver', function () {
+    $(document).on('change', '.isDriver', function() {
 
         if ($(this).is(':checked') == true) {
             isDriver = true;
@@ -420,12 +436,15 @@ session_start();
 
 
             if (carType.vehicleType) {
+
                 if ($.inArray(carType.vehicleType, vehicleType) === -1) {
+
                     vehicleType.push(carType.vehicleType);
                 }
             }
 
             if (userIds.length > 0) {
+
                 userIds.forEach((userIdsData) => {
                     if (userIdsData == userId) {
                         vehicleType.splice($.inArray(carType.vehicleType, vehicleType), 1);
@@ -437,29 +456,37 @@ session_start();
         });
 
         if (vehicleType.length > 0) {
+
             vehicleType.forEach((data) => {
 
                 var rentalVehicleTypeRef = database.collection('rental_vehicle_type').where("name", "==", data);
 
-                rentalVehicleTypeRef.get().then(async function (snapshots) {
+                rentalVehicleTypeRef.get().then(async function(snapshots) {
 
                     snapshots.docs.forEach((section) => {
                         var datas = section.data();
-
                         var activeTag = "";
                         if (count == 0) {
+
                             activeTag = "active show";
                         }
 
-                        carTypeHtml = '<a class="nav-link mb-4 ' + activeTag + '" id="v-pills-home-tab" data-toggle="pill"\n' +
-                            '                                       href=".v-pills-home_' + datas.name + '" role="tab" aria-controls="v-pills-home"\n' +
-                            '                                       aria-selected="true" value="' + datas.name + '" addressLat="' + addressLat + '" addressLong="' + addressLong + '" userIds = ' + JSON.stringify(userIds) + '>\n' +
+                        carTypeHtml = '<a class="nav-link mb-4 ' + activeTag +
+                            '" id="v-pills-home-tab" data-toggle="pill"\n' +
+                            '                                       href=".v-pills-home_' +
+                            datas.name + '" role="tab" aria-controls="v-pills-home"\n' +
+                            '                                       aria-selected="true" value="' +
+                            datas.name + '" addressLat="' + addressLat + '" addressLong="' +
+                            addressLong + '" userIds = ' + JSON.stringify(userIds) + '>\n' +
                             '                                        <img alt="#"\n' +
-                            '                                             src="' + datas.rental_vehicle_icon + '"\n' +
+                            '                                             src="' + datas
+                            .rental_vehicle_icon + '"\n' +
                             '                                             class="img-fluid item-img w-100">\n' +
-                            '                                        <span class="font-weight-bold">' + datas.name + '</span></a>';
+                            '                                        <span class="font-weight-bold">' +
+                            datas.name + '</span></a>';
 
-                        vehicleTypeHtml = '<div class="tab-pane fade ' + activeTag + ' v-pills-home_' + datas.name + '" role="tabpanel"\n' +
+                        vehicleTypeHtml = '<div class="tab-pane fade ' + activeTag +
+                            ' v-pills-home_' + datas.name + '" role="tabpanel"\n' +
                             '                                 aria-labelledby="v-pills-home-tab"></div>';
 
                         $('.car_type_detail_div').append(vehicleTypeHtml);
@@ -469,6 +496,7 @@ session_start();
 
                     });
 
+
                 });
 
 
@@ -476,11 +504,11 @@ session_start();
         } else {
             $("#data-table_processing_order").hide();
         }
-
+       
         return carTypeHtml;
     }
 
-    $(document).on('click', '.nav-link', function () {
+    $(document).on('click', '.nav-link', function() {
 
         var href = $(this).attr('href');
         var vehicleType = $(this).attr('value');
@@ -496,7 +524,7 @@ session_start();
 
     });
 
-    $(document).on('change', '.isDropSameLocation', function () {
+    $(document).on('change', '.isDropSameLocation', function() {
 
         if ($(this).is(':checked') == true) {
             $('.dropOffDiv').hide();
@@ -538,26 +566,26 @@ session_start();
 
         if (startTime == "" || endTime == "") {
 
-            $('.noData').html("{{trans('lang.start_end_time_error')}}");
+            $('.noData').html("{{ trans('lang.start_end_time_error') }}");
             window.scroll(0, 0);
 
         } else if (currentDate == startDate && currentDate == endDate && startTime < currentTime) {
 
-            $('.noData').html("{{trans('lang.start_greater_time_error')}}");
+            $('.noData').html("{{ trans('lang.start_greater_time_error') }}");
             window.scroll(0, 0);
 
         } else if (startTime > endTime || endTime < startTime) {
 
-            $('.noData').html("{{trans('lang.start_end_greater_time_error')}}");
+            $('.noData').html("{{ trans('lang.start_end_greater_time_error') }}");
             window.scroll(0, 0);
 
         } else if (pickLocation == "") {
 
-            $('.noData').html("{{trans('lang.pickup_location_error')}}");
+            $('.noData').html("{{ trans('lang.pickup_location_error') }}");
             window.scroll(0, 0);
         } else if (isDropSameLocation == true && dropLocation == "") {
 
-            $('.noData').html("{{trans('lang.dropoff_location_error')}}");
+            $('.noData').html("{{ trans('lang.dropoff_location_error') }}");
             window.scroll(0, 0);
 
         } else {
@@ -613,7 +641,7 @@ session_start();
 
                 },
 
-                success: function (data) {
+                success: function(data) {
 
                     data = JSON.parse(data);
 
@@ -635,12 +663,13 @@ session_start();
         var vehicleTypeHtml = "";
         var rentalServiceRef = "";
 
-        rentalServiceRef = geoFirestore.collection('users').where("role", "==", "driver").where('serviceType', '==', "rental-service").where("vehicleType", "==", vehicleType).near({
+        rentalServiceRef = geoFirestore.collection('users').where("role", "==", "driver").where('serviceType', '==',
+            "rental-service").where("vehicleType", "==", vehicleType).near({
             center: new firebase.firestore.GeoPoint(parseFloat(addressLat), parseFloat(addressLong)),
-            radius: 100
+            radius: 10000
         });
 
-        rentalServiceRef.get().then(async function (snapShots) {
+        rentalServiceRef.get().then(async function(snapShots) {
 
             if (snapShots.docs.length > 0) {
 
@@ -664,14 +693,16 @@ session_start();
 
                         var usersRef = database.collection('users').where("id", "==", datas).get();
 
-                        usersRef.then(async function (snapShotData) {
+                        usersRef.then(async function(snapShotData) {
                             if (snapShotData.docs.length > 0) {
                                 snapShotData.docs.forEach((section) => {
                                     var datas = section.data();
 
                                     var rating = 0;
-                                    if (datas.reviewsSum && datas.reviewsCount) {
-                                        rating = (datas.reviewsSum / datas.reviewsCount);
+                                    if (datas.reviewsSum && datas
+                                        .reviewsCount) {
+                                        rating = (datas.reviewsSum / datas
+                                            .reviewsCount);
 
                                         rating = Math.round(rating * 10) / 10;
 
@@ -684,76 +715,102 @@ session_start();
                                     }
 
                                     if (isDriver && datas.driverRate) {
-                                        carRate = parseInt(carRate) + parseInt(datas.driverRate);
+                                        carRate = parseInt(carRate) + parseInt(
+                                            datas.driverRate);
 
                                     }
 
                                     if (currencyAtRight) {
-                                        carRate = carRate + "" + currentCurrency;
+                                        carRate = carRate + "" +
+                                            currentCurrency;
                                     } else {
-                                        carRate = currentCurrency + "" + carRate;
+                                        carRate = currentCurrency + "" +
+                                            carRate;
                                     }
 
                                     var passengers = 0;
 
-                                    if (datas.carInfo.passenger && datas.carInfo.passenger != null && datas.carInfo.passenger != undefined) {
+                                    if (datas.carInfo.passenger && datas.carInfo
+                                        .passenger != null && datas.carInfo
+                                        .passenger != undefined) {
                                         passengers = datas.carInfo.passenger;
                                     }
                                     var gear = "";
-                                    if (datas.carInfo.gear && datas.carInfo.gear != null) {
+                                    if (datas.carInfo.gear && datas.carInfo
+                                        .gear != null) {
                                         gear = datas.carInfo.gear;
                                     }
 
                                     var fuel_type = "";
-                                    if (datas.carInfo.fuel_type && datas.carInfo.fuel_type != null) {
+                                    if (datas.carInfo.fuel_type && datas.carInfo
+                                        .fuel_type != null) {
                                         fuel_type = datas.carInfo.fuel_type;
                                     }
 
                                     var carMakes = "";
-                                    if (datas.carMakes && datas.carMakes != undefined) {
+                                    if (datas.carMakes && datas.carMakes !=
+                                        undefined) {
                                         carMakes = datas.carMakes;
                                     }
                                     var car_image = placeholderImage;
-                                    if (datas.carInfo.car_image && datas.carInfo.car_image != '' && datas.carInfo.car_image != null) {
+                                    if (datas.carInfo.car_image && datas.carInfo
+                                        .car_image != '' && datas.carInfo
+                                        .car_image != null) {
 
-                                        if (datas.carInfo.car_image.length > 0) {
+                                        if (datas.carInfo.car_image.length >
+                                            0) {
 
 
-                                            car_image = datas.carInfo.car_image[0];
+                                            car_image = datas.carInfo.car_image[
+                                                0];
 
                                         }
                                     }
 
-                                    vehicleTypeHtml = '<a href="#" onclick=rentalCarsView("' + datas.id + '","' + datas.driverRate + '","' + datas.carRate + '") class="rentalCarsView"><div class="rentalcar-list bg-white p-3 mb-4">\n' +
+                                    vehicleTypeHtml =
+                                        '<a href="#" onclick=rentalCarsView("' +
+                                        datas.id + '","' + datas.driverRate +
+                                        '","' + datas.carRate +
+                                        '") class="rentalCarsView"><div class="rentalcar-list bg-white p-3 mb-4">\n' +
                                         '                                    <div class="row">\n' +
                                         '                                        <div class="col-md-3 car-img align-items-center d-flex">\n' +
                                         '                                            <img alt="#"\n' +
-                                        '                                                 src="' + car_image + '"\n' +
+                                        '                                                 src="' +
+                                        car_image + '"\n' +
                                         '                                                 class="img-fluid item-img">\n' +
                                         '                                        </div>\n' +
                                         '                                        <div class="col-md-7 car-detail car-det-title">\n' +
-                                        '                                            <h3>' + datas.carName + ' ' + carMakes + '</h3>\n' +
+                                        '                                            <h3>' +
+                                        datas.carName + ' ' + carMakes +
+                                        '</h3>\n' +
                                         '                                            <div class="ratings">\n' +
                                         '                                                <ul class="rating" data-rating="0" >\n' +
                                         '                                                    <li class="rating__item"></li>\n' +
                                         '                                                </ul>\n' +
-                                        '                                                <span>' + rating + '</span>\n' +
+                                        '                                                <span>' +
+                                        rating + '</span>\n' +
                                         '                                            </div>\n' +
                                         '                                            <div class="car-feture">\n' +
                                         '                                                <ul>\n' +
-                                        '                                                    <li><img src="../img/user-icon.png">' + passengers + ' Pessengers</li>\n' +
-                                        '                                                    <li><img src="../img/manual-icon.png">' + gear + '</li>\n' +
-                                        '                                                    <li><img src="../img/fuel-icon.png">' + fuel_type + '</li>\n' +
+                                        '                                                    <li><img src="../img/user-icon.png">' +
+                                        passengers + ' Pessengers</li>\n' +
+                                        '                                                    <li><img src="../img/manual-icon.png">' +
+                                        gear + '</li>\n' +
+                                        '                                                    <li><img src="../img/fuel-icon.png">' +
+                                        fuel_type + '</li>\n' +
                                         '                                                </ul>\n' +
                                         '                                            </div>\n' +
                                         '                                        </div>\n' +
                                         '                                        <div class="col-md-2 car-price">\n' +
-                                        '                                            <span class="price">' + carRate + '/<small>day</small></span>\n' +
+                                        '                                            <span class="price">' +
+                                        carRate +
+                                        '/<small>day</small></span>\n' +
                                         '                                        </div>\n' +
                                         '                                    </div>\n' +
                                         '                            </div></a>\n' +
                                         '                            ';
-                                    $('.v-pills-home_' + vehicleType).append(vehicleTypeHtml);
+                                    $('.v-pills-home_' + vehicleType).append(
+                                        vehicleTypeHtml);
                                     $('.v-pills-home_' + vehicleType).show();
 
                                 });
@@ -857,11 +914,11 @@ session_start();
 
             },
 
-            success: function (data) {
+            success: function(data) {
 
                 data = JSON.parse(data);
 
-                var url = '{{route('rental_cars.view', ':id')}}';
+                var url = '{{ route('rental_cars.view', ':id') }}';
                 url = url.replace(':id', id);
 
                 $('.rentalCarsView').attr('href', url);

@@ -70,7 +70,7 @@ class AjaxController extends Controller
         if($exist->isEmpty()){
 
             $user=User::create([
-                'name' => $request->email,
+                'name' => $request->firstName,
                 'email' => $request->email,
                 'password' => Hash::make($password),
             ]);
@@ -136,7 +136,7 @@ class AjaxController extends Controller
 
             User::create([
 
-                'name' => $request->email,
+                'name' => $request->firstName,
 
                 'email' => $request->email,
 
@@ -260,7 +260,7 @@ class AjaxController extends Controller
 
             $user=User::create([
 
-                'name' => $request->email,
+                'name' => $request->firstName,
 
                 'email' => $request->email,
 

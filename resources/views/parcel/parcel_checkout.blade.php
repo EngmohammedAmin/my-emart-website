@@ -846,7 +846,7 @@ session_start();
                 //             type: 'POST',
                 //             url: "<?php echo route('apply_parcel_coupon'); ?>",
                 //             data: {
-                //                 _token: '<?php echo csrf_token()
+                //                 _token: '<?php echo csrf_token();
                 ?>',
                 //                 coupon_code: coupon_code,
                 //                 discount: discount,
@@ -1045,7 +1045,7 @@ session_start();
             if (isSchedule == true) {
                 var d1 = new Date();
                 var today = new Date(d1.getUTCMonth(), d1.getUTCDate(), d1.getUTCFullYear(), d1
-                .getUTCHours(), d1.getUTCMinutes(), d1.getUTCSeconds());
+                    .getUTCHours(), d1.getUTCMinutes(), d1.getUTCSeconds());
 
                 if (senderPickupDateTime > today) {
                     sendToDriver = false;

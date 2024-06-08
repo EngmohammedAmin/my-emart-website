@@ -162,7 +162,7 @@ Route::get('pay', [CheckoutController::class, 'proccesstopay'])->name('pay');
 
 Route::post('order-proccessing', [CheckoutController::class, 'orderProccessing'])->name('order-proccessing');
 
-Route::post('stripepaymentcallback', [PaymentController::class, 'stripePaymentcallback'])->name('stripepaymentcallback');
+Route::get('stripepaymentcallback', [PaymentController::class, 'stripePaymentcallback'])->name('stripepaymentcallback');
 
 Route::post('process-stripe', [CheckoutController::class, 'processStripePayment'])->name('process-stripe');
 

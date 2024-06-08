@@ -38,15 +38,13 @@ session_start();
 
 <script src="https://cdn.firebase.com/libs/geofire/5.0.1/geofire.min.js"></script>
 
-<script type="text/javascript" src="{{asset('vendor/slick/slick.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('vendor/slick/slick.min.js') }}"></script>
 
 
 <script type="text/javascript">
-
-
     var rental_user_id = "<?php echo $id; ?>";
     var user_id = "<?php echo $user_id; ?>";
-    var id_order = "<?php echo uniqid();?>";
+    var id_order = "<?php echo uniqid(); ?>";
     var fcmToken = '';
     var currentCurrency = '';
     var currencyAtRight = false;
@@ -55,7 +53,7 @@ session_start();
     var refCurrency = database.collection('currencies').where('isActive', '==', true);
     var currencyData = "";
     var decimal_degits = 0;
-    refCurrency.get().then(async function (snapshots) {
+    refCurrency.get().then(async function(snapshots) {
         currencyData = snapshots.docs[0].data();
         currentCurrency = currencyData.symbol;
         currencyAtRight = currencyData.symbolAtRight;
@@ -75,7 +73,7 @@ session_start();
 
     var placeholderImage = '';
 
-    placeholderImageRef.get().then(async function (placeholderImageSnapshots) {
+    placeholderImageRef.get().then(async function(placeholderImageSnapshots) {
 
         var placeHolderImageData = placeholderImageSnapshots.data();
 
@@ -87,7 +85,7 @@ session_start();
     var orderPlacedSubject = '';
     var orderPlacedMsg = '';
 
-    database.collection('dynamic_notification').get().then(async function (snapshot) {
+    database.collection('dynamic_notification').get().then(async function(snapshot) {
         if (snapshot.docs.length > 0) {
             snapshot.docs.map(async (listval) => {
                 val = listval.data();
@@ -124,7 +122,7 @@ session_start();
 
     var emailTemplatesData = null;
 
-    codSettings.get().then(async function (codSettingsSnapshots) {
+    codSettings.get().then(async function(codSettingsSnapshots) {
 
         codSettings = codSettingsSnapshots.data();
         if (codSettings.isEnabled) {
@@ -136,7 +134,7 @@ session_start();
     });
 
 
-    razorpaySettings.get().then(async function (razorpaySettingsSnapshots) {
+    razorpaySettings.get().then(async function(razorpaySettingsSnapshots) {
 
         razorpaySetting = razorpaySettingsSnapshots.data();
 
@@ -166,7 +164,7 @@ session_start();
     });
 
 
-    stripeSettings.get().then(async function (stripeSettingsSnapshots) {
+    stripeSettings.get().then(async function(stripeSettingsSnapshots) {
 
         stripeSetting = stripeSettingsSnapshots.data();
 
@@ -194,7 +192,7 @@ session_start();
     });
 
 
-    paypalSettings.get().then(async function (paypalSettingsSnapshots) {
+    paypalSettings.get().then(async function(paypalSettingsSnapshots) {
 
         paypalSetting = paypalSettingsSnapshots.data();
 
@@ -230,7 +228,7 @@ session_start();
     });
 
 
-    walletSettings.get().then(async function (walletSettingsSnapshots) {
+    walletSettings.get().then(async function(walletSettingsSnapshots) {
 
         walletSetting = walletSettingsSnapshots.data();
 
@@ -250,7 +248,7 @@ session_start();
     });
 
 
-    payFastSettings.get().then(async function (payfastSettingsSnapshots) {
+    payFastSettings.get().then(async function(payfastSettingsSnapshots) {
 
         payFastSetting = payfastSettingsSnapshots.data();
         if (payFastSetting.isEnable) {
@@ -289,7 +287,7 @@ session_start();
 
     });
 
-    payStackSettings.get().then(async function (payStackSettingsSnapshots) {
+    payStackSettings.get().then(async function(payStackSettingsSnapshots) {
 
         payStackSetting = payStackSettingsSnapshots.data();
         if (payStackSetting.isEnable) {
@@ -316,7 +314,7 @@ session_start();
 
     });
 
-    flutterWaveSettings.get().then(async function (flutterWaveSettingsSnapshots) {
+    flutterWaveSettings.get().then(async function(flutterWaveSettingsSnapshots) {
 
         flutterWaveSetting = flutterWaveSettingsSnapshots.data();
         if (flutterWaveSetting.isEnable) {
@@ -347,7 +345,7 @@ session_start();
 
     });
 
-    MercadoPagoSettings.get().then(async function (MercadoPagoSettingsSnapshots) {
+    MercadoPagoSettings.get().then(async function(MercadoPagoSettingsSnapshots) {
 
         MercadoPagoSetting = MercadoPagoSettingsSnapshots.data();
         if (MercadoPagoSetting.isEnabled) {
@@ -383,8 +381,9 @@ session_start();
         var date = new Date();
         var couponRef = database.collection('rental_coupons').where('expiresAt', '>=', date);
         var couponHtml = '';
-        let menuHtmlx = couponRef.get().then(async function (couponRefSnapshots) {
-            couponHtml += '<div class="coupon-code"><label>Select Available Coupons to apply</label><span></span></div>';
+        let menuHtmlx = couponRef.get().then(async function(couponRefSnapshots) {
+            couponHtml +=
+                '<div class="coupon-code"><label>Select Available Coupons to apply</label><span></span></div>';
             couponHtml += '<div class="copupon-list">';
 
             couponHtml += '<ul>';
@@ -393,7 +392,8 @@ session_start();
                 coupon = doc.data();
 
                 if (coupon.isEnabled == true) {
-                    couponHtml += '<li value="' + coupon.code + '"><a style="cursor:pointer;">' + coupon.code + '</a></li>';
+                    couponHtml += '<li value="' + coupon.code +
+                        '"><a style="cursor:pointer;">' + coupon.code + '</a></li>';
 
                 }
 
@@ -402,7 +402,7 @@ session_start();
 
             return couponHtml;
         })
-        let menuHtml = await menuHtmlx.then(function (html) {
+        let menuHtml = await menuHtmlx.then(function(html) {
             if (html != undefined) {
                 return html;
             }
@@ -410,12 +410,13 @@ session_start();
         $('.coupon_detail').html(menuHtml);
     }
 
-    $(document).on("click", '#apply-coupon-code', function (event) {
+    $(document).on("click", '#apply-coupon-code', function(event) {
         var coupon_code = $("#coupon_code").val();
         console.log(coupon_code);
         var endOfToday = new Date();
-        var couponCodeRef = database.collection('rental_coupons').where('code', "==", coupon_code).where('isEnabled', "==", true).where('expiresAt', ">=", endOfToday);
-        couponCodeRef.get().then(async function (couponSnapshots) {
+        var couponCodeRef = database.collection('rental_coupons').where('code', "==", coupon_code).where(
+            'isEnabled', "==", true).where('expiresAt', ">=", endOfToday);
+        couponCodeRef.get().then(async function(couponSnapshots) {
             if (couponSnapshots.docs && couponSnapshots.docs.length) {
                 var coupondata = couponSnapshots.docs[0].data();
 
@@ -426,14 +427,14 @@ session_start();
                     type: 'POST',
                     url: "<?php echo route('apply_rental_coupon'); ?>",
                     data: {
-                        _token: '<?php echo csrf_token() ?>',
+                        _token: '<?php echo csrf_token(); ?>',
                         coupon_code: coupon_code,
                         discount: discount,
                         discountType: discountType,
                         coupon_id: coupondata.id,
                         rental_user_id: rental_user_id,
                     },
-                    success: function (data) {
+                    success: function(data) {
                         data = JSON.parse(data);
                         window.location.reload();
                         loadcurrency();
@@ -447,7 +448,7 @@ session_start();
         });
     });
 
-    $(document).on('click', '.copupon-list li', function (e) {
+    $(document).on('click', '.copupon-list li', function(e) {
 
         var navSelectedValue = $(this).attr('value');
         $('#coupon_code').val(navSelectedValue);
@@ -457,11 +458,12 @@ session_start();
 
         var wallet_amount = 0;
 
-        await UserRef.get().then(async function (userSnapshots) {
+        await UserRef.get().then(async function(userSnapshots) {
 
             var userDetails = userSnapshots.docs[0].data();
 
-            if (userDetails.wallet_amount && userDetails.wallet_amount != null && userDetails.wallet_amount != '') {
+            if (userDetails.wallet_amount && userDetails.wallet_amount != null && userDetails
+                .wallet_amount != '') {
                 wallet_amount = userDetails.wallet_amount;
             }
 
@@ -490,11 +492,11 @@ session_start();
 
     async function finalCheckout() {
 
-        UserRef.get().then(async function (userSnapshots) {
+        UserRef.get().then(async function(userSnapshots) {
 
             var userDetails = userSnapshots.docs[0].data();
 
-            rentalVehicleTypeUserRef.get().then(async function (snapshots) {
+            rentalVehicleTypeUserRef.get().then(async function(snapshots) {
                 var wallet_amount = userDetails.wallet_amount;
                 var author = userDetails;
 
@@ -584,9 +586,10 @@ session_start();
                 var adminCommission = $('#adminCommission').val();
                 var adminCommissionType = $('#adminCommissionType').val();
 
-                var taxSetting = '<?php echo json_encode(@$rentalCarsData['taxValue'])?>';
+                var taxSetting = '<?php echo json_encode(@$rentalCarsData['taxValue']); ?>';
 
-                if (taxSetting && taxSetting != null && taxSetting != "null" && taxSetting != undefined) {
+                if (taxSetting && taxSetting != null && taxSetting != "null" &&
+                    taxSetting != undefined) {
                     taxSetting = JSON.parse(taxSetting);
                 } else {
                     taxSetting = [];
@@ -640,7 +643,7 @@ session_start();
                         url: "<?php echo route('rental_order_proccessing'); ?>",
 
                         data: {
-                            _token: '<?php echo csrf_token() ?>',
+                            _token: '<?php echo csrf_token(); ?>',
                             order_json: order_json,
                             razorpaySecret: razorpaySecret,
                             razorpayKey: razorpayKey,
@@ -649,7 +652,7 @@ session_start();
                             total_pay: total_pay
                         },
 
-                        success: function (data) {
+                        success: function(data) {
 
                             data = JSON.parse(data);
                             loadcurrency();
@@ -699,7 +702,7 @@ session_start();
                         url: "<?php echo route('rental_order_proccessing'); ?>",
 
                         data: {
-                            _token: '<?php echo csrf_token() ?>',
+                            _token: '<?php echo csrf_token(); ?>',
                             order_json: order_json,
                             mercadopago_public_key: mercadopago_public_key,
                             mercadopago_access_token: mercadopago_access_token,
@@ -717,7 +720,7 @@ session_start();
                             currencyData: currencyData,
                         },
 
-                        success: function (data) {
+                        success: function(data) {
 
                             data = JSON.parse(data);
                             loadcurrency();
@@ -766,7 +769,7 @@ session_start();
                         url: "<?php echo route('rental_order_proccessing'); ?>",
 
                         data: {
-                            _token: '<?php echo csrf_token() ?>',
+                            _token: '<?php echo csrf_token(); ?>',
                             order_json: order_json,
                             stripeKey: stripeKey,
                             stripeSecret: stripeSecret,
@@ -781,7 +784,7 @@ session_start();
                             address_country: $("#address_country").val()
                         },
 
-                        success: function (data) {
+                        success: function(data) {
 
                             data = JSON.parse(data);
                             loadcurrency();
@@ -834,7 +837,7 @@ session_start();
                         url: "<?php echo route('rental_order_proccessing'); ?>",
 
                         data: {
-                            _token: '<?php echo csrf_token() ?>',
+                            _token: '<?php echo csrf_token(); ?>',
                             order_json: order_json,
                             paypalKey: paypalKey,
                             paypalSecret: paypalSecret,
@@ -849,7 +852,7 @@ session_start();
                             address_country: $("#address_country").val()
                         },
 
-                        success: function (data) {
+                        success: function(data) {
 
                             data = JSON.parse(data);
                             loadcurrency();
@@ -902,7 +905,7 @@ session_start();
                         url: "<?php echo route('rental_order_proccessing'); ?>",
 
                         data: {
-                            _token: '<?php echo csrf_token() ?>',
+                            _token: '<?php echo csrf_token(); ?>',
                             order_json: order_json,
                             payfast_merchant_key: payfast_merchant_key,
                             payfast_merchant_id: payfast_merchant_id,
@@ -920,7 +923,7 @@ session_start();
                             address_country: $("#address_country").val()
                         },
 
-                        success: function (data) {
+                        success: function(data) {
 
                             data = JSON.parse(data);
                             loadcurrency();
@@ -969,7 +972,7 @@ session_start();
                         url: "<?php echo route('rental_order_proccessing'); ?>",
 
                         data: {
-                            _token: '<?php echo csrf_token() ?>',
+                            _token: '<?php echo csrf_token(); ?>',
                             order_json: order_json,
                             payment_method: payment_method,
                             authorName: authorName,
@@ -984,7 +987,7 @@ session_start();
                             address_country: $("#address_country").val()
                         },
 
-                        success: function (data) {
+                        success: function(data) {
 
                             data = JSON.parse(data);
                             loadcurrency();
@@ -1035,7 +1038,7 @@ session_start();
                         url: "<?php echo route('rental_order_proccessing'); ?>",
 
                         data: {
-                            _token: '<?php echo csrf_token() ?>',
+                            _token: '<?php echo csrf_token(); ?>',
                             order_json: order_json,
                             payment_method: payment_method,
                             authorName: authorName,
@@ -1053,7 +1056,7 @@ session_start();
                             currencyData: currencyData
                         },
 
-                        success: function (data) {
+                        success: function(data) {
 
                             data = JSON.parse(data);
                             loadcurrency();
@@ -1068,12 +1071,15 @@ session_start();
                     if (payment_method == "wallet") {
                         payment_method = "wallet";
                         console.log($('#user_wallet_amount').text());
+                        console.log('payment_method :' + payment_method);
+                        console.log('wallet_amount befor:' + wallet_amount);
                         if (wallet_amount < total_pay) {
                             alert("you don't have sufficient balance to book this car!!");
                             return false;
                         }
                     } else {
                         payment_method = "cod";
+
                     }
 
                     database.collection('rental_orders').doc(id_order).set({
@@ -1103,7 +1109,7 @@ session_start();
                         'adminCommissionType': adminCommissionType,
                         'driverRate': driverRateAmount,
                         'rejectedByDrivers': null,
-                    }).then(function (result) {
+                    }).then(function(result) {
 
                         $.ajax({
 
@@ -1112,41 +1118,112 @@ session_start();
                             url: "<?php echo route('rental_order_complete'); ?>",
 
                             data: {
-                                _token: '<?php echo csrf_token() ?>',
+                                _token: '<?php echo csrf_token(); ?>',
                                 'fcm': fcmToken,
                                 'authorName': authorName,
                                 'subject': subject,
                                 'message': message
                             },
 
-                            success: async function (data) {
+                            success: async function(data) {
 
                                 data = JSON.parse(data);
                                 if (payment_method == "wallet") {
-                                    wallet_amount = wallet_amount - total_pay;
-                                    database.collection('users').doc(user_id).update({'wallet_amount': wallet_amount}).then(async function (result) {
+                                    wallet_amount = wallet_amount -
+                                        total_pay;
+                                    database.collection('users').doc(
+                                        user_id).update({
+                                        'wallet_amount': wallet_amount
+                                    }).then(async function(result) {
+                                        console.log(
+                                            'wallet_amount after =' +
+                                            wallet_amount
+                                        );
+                                        var checkMailToCustomer =
+                                            await sendMailToRental(
+                                                userEmail,
+                                                authorName,
+                                                authorName,
+                                                pickUpAddress,
+                                                dropAddress,
+                                                pickUpDateTime,
+                                                driver);
 
-                                        var checkMailToCustomer = await sendMailToRental(userEmail, authorName, authorName, pickUpAddress, dropAddress, pickUpDateTime, driver);
+                                        if (
+                                            checkMailToCustomer
+                                        ) {
+                                            console.log(
+                                                'sent Mail To Customer:' +
+                                                checkMailToCustomer
+                                            );
+                                            var checkMailToDriver =
+                                                await sendMailToRental(
+                                                    driver
+                                                    .email,
+                                                    driver
+                                                    .firstName +
+                                                    ' ' +
+                                                    driver
+                                                    .lastName,
+                                                    authorName,
+                                                    pickUpAddress,
+                                                    dropAddress,
+                                                    pickUpDateTime,
+                                                    driver);
 
-                                        if (checkMailToCustomer) {
-                                            var checkMailToDriver = await sendMailToRental(driver.email, driver.firstName + ' ' + driver.lastName, authorName, pickUpAddress, dropAddress, pickUpDateTime, driver);
+                                            if (
+                                                checkMailToDriver
+                                            ) {
+                                                console.log(
+                                                    'sent Mail To Driver :' +
+                                                    checkMailToDriver
+                                                );
+                                                window
+                                                    .location
+                                                    .href =
+                                                    "<?php echo url('rental_success'); ?>";
 
-                                            if (checkMailToDriver) {
-                                                window.location.href = "<?php echo url('rental_success'); ?>";
-
+                                            } else {
+                                                console.log(
+                                                    'checkMailToDriver failed'
+                                                );
                                             }
+                                        } else {
+                                            console.log(
+                                                'checkMailToCustomer failed'
+                                            );
                                         }
 
                                     });
                                 } else {
 
-                                    var checkMailToCustomer = await sendMailToRental(userEmail, authorName, authorName, pickUpAddress, dropAddress, pickUpDateTime, driver);
+                                    var checkMailToCustomer =
+                                        await sendMailToRental(
+                                            userEmail, authorName,
+                                            authorName, pickUpAddress,
+                                            dropAddress, pickUpDateTime,
+                                            driver);
 
                                     if (checkMailToCustomer) {
-                                        var checkMailToDriver = await sendMailToRental(driver.email, driver.firstName + ' ' + driver.lastName, authorName, pickUpAddress, dropAddress, pickUpDateTime, driver);
+                                        console.log(
+                                            'checkMailToCustomer not wallet '
+                                        );
+                                        var checkMailToDriver =
+                                            await sendMailToRental(
+                                                driver.email, driver
+                                                .firstName + ' ' +
+                                                driver.lastName,
+                                                authorName,
+                                                pickUpAddress,
+                                                dropAddress,
+                                                pickUpDateTime, driver);
 
                                         if (checkMailToDriver) {
-                                            window.location.href = "<?php echo url('rental_success'); ?>";
+                                            console.log(
+                                                'checkMailToDriver not wallet '
+                                            );
+                                            window.location.href =
+                                                "<?php echo url('rental_success'); ?>";
 
                                         }
                                     }
@@ -1169,9 +1246,10 @@ session_start();
 
     }
 
-    async function sendMailToRental(userEmail, userName, passengerName, pickupLocation, dropoffLocation, pickUpDateTime, driverData) {
+    async function sendMailToRental(userEmail, userName, passengerName, pickupLocation, dropoffLocation, pickUpDateTime,
+        driverData) {
 
-        await email_templates.get().then(async function (snapshots) {
+        await email_templates.get().then(async function(snapshots) {
             emailTemplatesData = snapshots.docs[0].data();
 
         });
@@ -1201,12 +1279,8 @@ session_start();
 
         emailTemplatesData.message = message;
 
-        var url = "{{url('send-email')}}";
+        var url = "{{ url('send-email') }}";
 
         return await sendEmail(url, emailTemplatesData.subject, emailTemplatesData.message, [userEmail]);
     }
-
 </script>
-
-
-

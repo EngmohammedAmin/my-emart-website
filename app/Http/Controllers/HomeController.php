@@ -14,7 +14,7 @@ class HomeController extends Controller
     public function __construct()
     {
     	$route = \Route::currentRouteName();
-		
+
     	if(!isset($_COOKIE['section_id']) && !isset($_COOKIE['address_name']) && $route != "set-location"){
     		\Redirect::to('set-location')->send();
 		}
@@ -31,6 +31,7 @@ class HomeController extends Controller
 	        return view('parcel.homeParcel');
 	    } else if (isset($_COOKIE['service_type']) && $_COOKIE['service_type'] == 'Rental Service') {
 	        return view('rental.index');
+           
 	    } else if (isset($_COOKIE['service_type']) && $_COOKIE['service_type'] == 'Ecommerce Service') {
 	        return view('ecommerce.index');
 	    } else if (isset($_COOKIE['service_type']) && $_COOKIE['service_type'] == 'Multivendor Delivery Service') {
@@ -39,7 +40,7 @@ class HomeController extends Controller
 	        return view('cab_service.index');
 	    }
     }
-	
+
 	public function setLocation()
     {
     	return view('layer');

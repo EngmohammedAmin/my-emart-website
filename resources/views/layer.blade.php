@@ -8,13 +8,13 @@
 
 @include('layouts.footer')
 
-<script type="text/javascript">
 
-    jQuery("#overlay").show();
+<script type="text/javascript">
+    {{--  jQuery("#overlay").show();  --}}
 
     var placeholderImageRef = database.collection('settings').doc('placeHolderImage');
     var placeholderImageSrc = '';
-    placeholderImageRef.get().then(async function (placeholderImageSnapshots) {
+    placeholderImageRef.get().then(async function(placeholderImageSnapshots) {
         var placeHolderImageData = placeholderImageSnapshots.data();
         placeholderImageSrc = placeHolderImageData.image;
     })
@@ -22,14 +22,15 @@
 
     var homepageTemplateRef = database.collection('settings').doc('homepageTemplate');
 
-    homepageTemplateRef.get().then(async function (homepageTemplateSnapshots) {
+    homepageTemplateRef.get().then(async function(homepageTemplateSnapshots) {
         var homepageTemplateData = homepageTemplateSnapshots.data();
         $('#home').html(homepageTemplateData.homepageTemplate);
 
-        await globalSettingsRef.get().then(async function (globalSettingsSnapshots) {
+        await globalSettingsRef.get().then(async function(globalSettingsSnapshots) {
             var globalSettingsData = globalSettingsSnapshots.data();
             var src_new = globalSettingsData.appLogo;
-            $('#logo_web').html('<img alt="#" class="logo_web img-fluid" src="' + src_new + '">');
+            $('#logo_web').html('<img alt="#" class="logo_web img-fluid" src="' + src_new +
+                '">');
 
             $('.location-group .locate-me').attr("onclick", "getCurrentLocation()");
 
@@ -39,13 +40,13 @@
         jQuery("#overlay").hide();
     });
 
-    $(document).ready(function () {
+    $(document).ready(function() {
 
-        $(document).on("click", ".cat-slider .cat-item", function (e) {
+        $(document).on("click", ".cat-slider .cat-item", function(e) {
             $(this).addClass('section-selected').siblings().removeClass('section-selected');
         });
 
-        $(document).on("click", ".btn-continue", function (e) {
+        $(document).on("click", ".btn-continue", function(e) {
             var element = $('.cat-slider .cat-item.section-selected');
             var section_id = element.attr('data-id');
 
@@ -74,7 +75,7 @@
     });
 
     async function getSections() {
-        database.collection('sections').where('isActive', '==', true).get().then(async function (sectionsSnapshot) {
+        database.collection('sections').where('isActive', '==', true).get().then(async function(sectionsSnapshot) {
             sections = document.getElementById('sections');
             sections.innerHTML = '';
             sectionshtml = buildHTMLSections(sectionsSnapshot);
@@ -95,7 +96,7 @@
         alldata.forEach((listval) => {
             var val = listval;
             var category_id = val.id;
-            var trending_route = "{{ route('category_detail',':id')}}";
+            var trending_route = "{{ route('category_detail', ':id') }}";
             trending_route = trending_route.replace(':id', category_id);
 
             if (val.sectionImage) {
@@ -103,7 +104,11 @@
             } else {
                 photo = placeholderImageSrc;
             }
-            html = html + '<div class="cat-item px-2 py-1" data-color="' + val.color + '" service_type="' + val.serviceType + '" data-name="' + val.name + '" data-dine_in="' + val.dine_in_active + '" data-id="' + val.id + '"><a class="bg-white d-block p-2 text-center shadow-sm cat-link" href="javascript:void(0)"><img alt="#" src="' + photo + '" class="img-fluid mb-2"><p class="m-0 small">' + val.name + '</p></a></div>';
+            html = html + '<div class="cat-item px-2 py-1" data-color="' + val.color + '" service_type="' + val
+                .serviceType + '" data-name="' + val.name + '" data-dine_in="' + val.dine_in_active +
+                '" data-id="' + val.id +
+                '"><a class="bg-white d-block p-2 text-center shadow-sm cat-link" href="javascript:void(0)"><img alt="#" src="' +
+                photo + '" class="img-fluid mb-2"><p class="m-0 small">' + val.name + '</p></a></div>';
         });
         return html;
     }
@@ -113,30 +118,30 @@
             slidesToShow: 4,
             arrows: true,
             responsive: [{
-                breakpoint: 1199,
-                settings: {
-                    arrows: true,
-                    centerMode: true,
-                    centerPadding: '40px',
-                    slidesToShow: 4
-                }
-            }, {
-                breakpoint: 992,
-                settings: {
-                    arrows: true,
-                    centerMode: true,
-                    centerPadding: '40px',
-                    slidesToShow: 3
-                }
-            }, {
-                breakpoint: 768,
-                settings: {
-                    arrows: true,
-                    centerMode: true,
-                    centerPadding: '40px',
-                    slidesToShow: 2
-                }
-            },
+                    breakpoint: 1199,
+                    settings: {
+                        arrows: true,
+                        centerMode: true,
+                        centerPadding: '40px',
+                        slidesToShow: 4
+                    }
+                }, {
+                    breakpoint: 992,
+                    settings: {
+                        arrows: true,
+                        centerMode: true,
+                        centerPadding: '40px',
+                        slidesToShow: 3
+                    }
+                }, {
+                    breakpoint: 768,
+                    settings: {
+                        arrows: true,
+                        centerMode: true,
+                        centerPadding: '40px',
+                        slidesToShow: 2
+                    }
+                },
                 {
                     breakpoint: 560,
                     settings: {
@@ -158,13 +163,13 @@
         var input = document.getElementById('user_locationnew');
         autocomplete = new google.maps.places.Autocomplete(input);
 
-        google.maps.event.addListener(autocomplete, 'place_changed', function () {
+        google.maps.event.addListener(autocomplete, 'place_changed', function() {
             var place = autocomplete.getPlace();
             address_name = place.name;
             address_lat = place.geometry.location.lat();
             address_lng = place.geometry.location.lng();
 
-            $.each(place.address_components, function (i, address_component) {
+            $.each(place.address_components, function(i, address_component) {
                 address_name1 = '';
                 if (address_component.types[0] == "premise") {
                     if (address_name1 == '') {

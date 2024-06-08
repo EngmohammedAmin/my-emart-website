@@ -2,6 +2,13 @@
 
 return [
 
+    'Wallet_Topup'=>"Wallet Topup",
+    'Previous'=>"Previous",
+    'next'=>"Next",
+    'Reset Password'=>"Reset Password",
+    'E-Mail Address'=>"E-Mail Address",
+    'Send Password Reset Link'=>"Send Password Reset Link",
+
     'Available_Coupons'=>"Select Available Coupons to apply",
     'check_order'=>"Check your order status in",
 'venders_dishes'=>"Search for vendors or dishes",
